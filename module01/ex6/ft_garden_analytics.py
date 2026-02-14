@@ -80,7 +80,7 @@ class PrizeFlower(FloweringPlant):
 class GardenManager:
     """Gestore di un giardino con statistiche integrate."""
 
-    total_garden: int = 0
+    total_gardens = 0
 
     def __init__(self, owner: str) -> None:
         """
@@ -94,7 +94,7 @@ class GardenManager:
         self.plants: list = []
         self.total_growth: int = 0
         self.stats = self.GardenStats()
-        GardenManager.total_garden += 1
+        GardenManager.total_gardens += 1
 
     class GardenStats:
         """Helper interno per calcolare statistiche del giardino."""
@@ -140,6 +140,71 @@ class GardenManager:
     
     def grow_all(self, cm: int) -> None:
         """
+        Fa crescere tutte le piante di questo giardino.
+        self.plants e' la lista di QUESTO giardino.
+        Se ho garden_alice e garden_bob, garden_alice.grow_all(1)
+        fa crescere solo le piante di alice.
+        """
+        print(f"\n{self.owner} is helping all plants grow...")
+        for plant in self.plants:
+            plant.grow(cm)
+            self.total_growth += cm
         
+    def report(self) -> None:
+        """Stampa il report di QUESTO giardino usando le stats interne."""
+        print(f"\n=== {self.owner}'s Garden Report ===")
+        print("Plants in garden:")
+        for plant in self.plants:
+            print(f"  - {plant.get_info()}")
+        counts = self.stats.plant_count(self.plants)
+        print(f"\nPlants added: {len(self.plants)}, "
+              f"Total growth: {self.total_growth}cm")
+        print(f"Plant types: {counts['regular']} regular, "
+              f"{counts['flowering']} flowering, "
+              f"{counts['prize']} prize flowers")
+    
+    def score(self) -> int:
+        """Calcola il punteggio del giardino (somma altezze)."""
+        return self.stats.total_height(self.plants)
+
+    @classmethod
+    def create_garden_network(cls, owners: list) -> list:
+        """
+        Crea una rete di giardini da una lista di nomi.
+        """
+        gardens = []
+        for owner in owners:
+            gardens.append(cls(owner))
+        return gardens
+
+    @staticmethod
+    def is_valid_height(height: int) -> bool:
+        """Controlla se un'altezza e' valida (non negativa)."""
+        return height >= 0
+    
+
+if __name__ == "__main__":
+    print("=== Garden Management System Demo ===\n")
+    alice_garden = GardenManager("Alice")
+    oak = Plant("Oak Tree", 140)
+    rose = FloweringPlant("Rose", 25, "red")
+    rose.bloom()
+    sunflower = PrizeFlower("Sunflower", 50, "yellow", 10)
+    sunflower.bloom()
+    alice_garden.add_plant(oak)
+    alice_garden.add_plant(rose)
+    alice_garden.add_plant(sunflower)
+    alice_garden.grow_all(1)
+    alice_garden.report()
+    print(f"\nHeight validation test: {GardenManager.is_valid_height(50)}")
+    bob_garden = GardenManager("Bob")
+    bob_garden.add_plant(Plant("Fern", 50))
+    bob_garden.add_plant(FloweringPlant("Tulip", 40, "pink"))
+    bob_garden.grow_all(1)
+    print(f"Garden scores - "
+          f"{alice_garden.owner}: {alice_garden.score()}, "
+          f"{bob_garden.owner}: {bob_garden.score()}")
+    print(f"Total gardens managed: {GardenManager.total_gardens}")
+    
 
     
