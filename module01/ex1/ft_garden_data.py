@@ -1,4 +1,5 @@
 class Plant:
+    """Info of a Plant"""
     name: str
     height: int
     age: int

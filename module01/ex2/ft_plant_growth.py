@@ -1,15 +1,19 @@
 class Plant:
+    """Info of a Plant"""
     name: str
     height: int
     age_plant: int
 
     def grow(self) -> None:
+        """Grow plant +1"""
         self.height += 1
 
     def age(self) -> None:
+        """Age plant +1"""
         self.age_plant += 1
 
     def get_info(self) -> None:
+        """Get info plant"""
         print(f"{self.name}: {self.height}cm, {self.age_plant} days old")
 
 

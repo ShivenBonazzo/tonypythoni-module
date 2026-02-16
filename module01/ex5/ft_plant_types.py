@@ -1,12 +1,16 @@
 class Plant:
-    def __init__(self, name, height, age):
+    """Class of a Plant"""
+    def __init__(self, name, height, age) -> None:
+        """Info of a Plant"""
         self.name = name
         self.height = height
         self.age = age
 
 
 class Flower(Plant):
-    def __init__(self, name, height, age, color):
+    """Class of a Flower"""
+    def __init__(self, name, height, age, color) -> None:
+        """Info of a Flower"""
         super().__init__(name, height, age)
         self.color = color
         print(
@@ -14,11 +18,14 @@ class Flower(Plant):
             f"{self.age} days, {self.color} color")
 
     def bloom(self) -> None:
+        """Flower blooming"""
         print(f"{self.name} is blooming beautifully!\n")
 
 
 class Tree(Plant):
-    def __init__(self, name, height, age, diameter):
+    """Class of a Tree"""
+    def __init__(self, name, height, age, diameter) -> None:
+        """Info of a Tree"""
         super().__init__(name, height, age)
         self.diameter = diameter
         print(
@@ -26,12 +33,17 @@ class Tree(Plant):
             f"{self.age} days, {self.diameter}cm diameter")
 
     def produce_shade(self) -> None:
+        """Produce shade"""
         shade_area = int(3.14159 * (self.diameter / 2))
         print(f"{self.name} provides {shade_area} square meters of shade\n")
 
 
 class Vegetable(Plant):
-    def __init__(self, name, height, age, harvest_season, nutritional_value):
+    """Class of a vegetable"""
+    def __init__(
+            self, name, height, age, harvest_season, nutritional_value
+            ) -> None:
+        """Info of a vegetable"""
         super().__init__(name, height, age)
         self.harvest_season = harvest_season
         self.nutritional_value = nutritional_value
