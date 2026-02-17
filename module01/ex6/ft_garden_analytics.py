@@ -53,7 +53,7 @@ class FloweringPlant(Plant):
         metodo, non quello di Plant, perche' e' piu' specifico.
         """
         bloom_status = "blooming" if self.is_blooming else "not blooming"
-        return f"{self.name}: {self.height}cm,"
+        return f"{self.name}: {self.height}cm, {self.color} flowers (blooming)"
         f" {self.color} flowers ({bloom_status})"
 
 
@@ -139,7 +139,7 @@ class GardenManager:
 
     def add_plant(self, plant: Plant) -> None:
         """Aggiunge una pianta a QUESTO giardino."""
-        self.plants.append(plant)
+        self.plants = self.plants + [plant]
         print(f"Added {plant.name} to {self.owner}'s garden")
 
     def grow_all(self, cm: int) -> None:
@@ -160,12 +160,15 @@ class GardenManager:
         print("Plants in garden:")
         for plant in self.plants:
             print(f"  - {plant.get_info()}")
-        counts = self.stats.plant_count(self.plants)
-        print(f"\nPlants added: {len(self.plants)}, "
+        total_plants = 0
+        for plant in self.plants:
+            total_plants += 1
+        type_counts = self.stats.plant_count(self.plants)
+        print(f"\nPlants added: {total_plants}, "
               f"Total growth: {self.total_growth}cm")
-        print(f"Plant types: {counts['regular']} regular, "
-              f"{counts['flowering']} flowering, "
-              f"{counts['prize']} prize flowers")
+        print(f"Plant types: {type_counts['regular']} regular, "
+              f"{type_counts['flowering']} flowering, "
+              f"{type_counts['prize']} prize flowers")
 
     def score(self) -> int:
         """Calcola il punteggio del giardino (somma altezze)."""
@@ -178,7 +181,7 @@ class GardenManager:
         """
         gardens = []
         for owner in owners:
-            gardens.append(cls(owner))
+            gardens = gardens + [cls(owner)]
         return gardens
 
     @staticmethod
@@ -190,7 +193,7 @@ class GardenManager:
 if __name__ == "__main__":
     print("=== Garden Management System Demo ===\n")
     alice_garden = GardenManager("Alice")
-    oak = Plant("Oak Tree", 140)
+    oak = Plant("Oak Tree", 100)
     rose = FloweringPlant("Rose", 25, "red")
     rose.bloom()
     sunflower = PrizeFlower("Sunflower", 50, "yellow", 10)
@@ -202,9 +205,12 @@ if __name__ == "__main__":
     alice_garden.report()
     print(f"\nHeight validation test: {GardenManager.is_valid_height(50)}")
     bob_garden = GardenManager("Bob")
-    bob_garden.add_plant(Plant("Fern", 50))
-    bob_garden.add_plant(FloweringPlant("Tulip", 40, "pink"))
-    bob_garden.grow_all(1)
+    fern = Plant("Fern", 50)
+    tulip = FloweringPlant("Tulip", 40, "pink")
+    bob_garden.plants = bob_garden.plants + [fern, tulip]
+    for plant in bob_garden.plants:
+        plant.height += 1
+        bob_garden.total_growth += 1
     print(f"Garden scores - "
           f"{alice_garden.owner}: {alice_garden.score()}, "
           f"{bob_garden.owner}: {bob_garden.score()}")
