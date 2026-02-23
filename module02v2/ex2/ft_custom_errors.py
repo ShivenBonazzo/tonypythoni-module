@@ -15,11 +15,16 @@ def check_plant() -> None:
     plant = input("Choose your plant: ")
     try:
         if plant == "tomato":
-            raise PlantError("Caught PlantError: The tomato plant is wiltin!")
+            raise PlantError("The tomato plant is wiltin!")
+        elif plant is None or plant == "":
+            raise PlantError(" invalid name")
         else:
-            print(f"{plant} is a fantastic name for a plant and he is all good!")
+            print(
+                f"{plant} is a fantastic name"
+                " for a plant and he is all good!"
+                )
     except PlantError as e:
-        print(f"{e}")
+        print(f"Caught PlantError: {e}")
 
 
 def check_water() -> None:
@@ -44,10 +49,15 @@ def check_garden() -> None:
     try:
         if plant == "tomato":
             raise PlantError("Caught PlantError: The tomato plant is wiltin!")
+        elif plant is None or plant == "":
+            raise PlantError("invalid plant")
         else:
-            print(f"{plant} is a fantastic name for a plant and he is all good!")
+            print(
+                f"{plant} is a fantastic name"
+                " for a plant and he is all good!"
+                )
     except GardenError as e:
-        print(f"{e}")
+        print(f"Caught a garden error: {e}")
     water = input("How much water do you wanna put? ")
     try:
         if int(water) > 2:
@@ -56,8 +66,8 @@ def check_garden() -> None:
             print("Good choice my brotha")
         elif int(water) <= 0:
             raise WaterError("My brotha is trolling me")
-    except WaterError as e:
-        print(f"{e}")
+    except GardenError as e:
+        print(f"Caught a garden error: {e}")
     except ValueError:
         print("Yo my brotha don't know what is a number")
 

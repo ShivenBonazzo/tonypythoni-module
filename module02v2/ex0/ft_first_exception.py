@@ -1,4 +1,4 @@
-def check_temperature(temp_str) -> None:
+def check_temperature(temp_str: str) -> None:
     try:
         print(f"\nTesting temperature: {temp_str}")
         if 0 <= int(temp_str) <= 40:

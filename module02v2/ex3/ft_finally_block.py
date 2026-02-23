@@ -1,4 +1,4 @@
-def water_plants(plant_list) -> None:
+def water_plants(plant_list: list) -> None:
     try:
         print("Opening watering system")
         for plant in plant_list:
@@ -10,7 +10,7 @@ def water_plants(plant_list) -> None:
         print(f"{e}")
     finally:
         print("Closing watering system (cleanup)")
-        
+
 
 def test_watering_system() -> None:
     plant_list = ["tomato", "lettuce", "carrots"]
@@ -18,7 +18,7 @@ def test_watering_system() -> None:
     water_plants(plant_list)
     print("Watering completed successfully!")
     print("\nTesting with error...")
-    list_error = [None, "tomato", "carrots"]
+    list_error = ["tomato", None, "carrots"]
     water_plants(list_error)
     print("\nCleanup always happens, even with errors!")
 

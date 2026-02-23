@@ -15,7 +15,7 @@ class GardenManager:
         self.plants: list = []
 
     def add_plant(self, plant: str) -> None:
-        if plant == "" or plant == None:
+        if plant == "" or plant is None:
             raise PlantError("Plant name cannot be empty!")
         self.plants = self.plants + [plant]
         print(f"Added {plant} successfully my brotha!")
@@ -26,7 +26,7 @@ class GardenManager:
             print("Opening watering system")
             for plant in self.plants:
                 if plant is None:
-                    raise WaterError(f"Cannot water None - invalid plant!")
+                    raise WaterError("Cannot water None - invalid plant!")
                 print(f"Watering {plant} - success")
         except WaterError as e:
             print(f"Error as {e}")
